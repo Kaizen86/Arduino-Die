@@ -24,7 +24,7 @@
 #define STARTUP_FLASH_LENGTH 200 //Length of startup flash in milliseconds. Not sure why you would really want to change this but whatever lol
 
 //Aesthetic
-#define NUMBER_OF_DIE 2 //How many dice are rolled
+#define NUMBER_OF_DICE 2 //How many dice are rolled
 #define RANDOM_FLASH_LENGTH_MIN 48 //Minimum length of random flashing when 'rolling' the die
 #define RANDOM_FLASH_LENGTH_MAX 52 //Maximum length of random flashing when 'rolling' the die
 #define NUMBER_SHOW_LENGTH 1000 //How long a number should be shown for before the next one is shown in milliseconds
@@ -74,7 +74,7 @@ void loop() {
 
     if (SERIAL_ENABLE) Serial.println("Flashing randomly...");
     //Flash leds randomly for aesthetic purposes
-    for (int i = 0; i <= random(48, 52); i++) { //Loop the following code roughly 50 times. Call to random() is done to add more noise
+    for (int i = 0; i <= random(RANDOM_FLASH_LENGTH_MIN, RANDOM_FLASH_LENGTH_MAX); i++) { //Loop the following code roughly 50 times. Call to random() is done to add more noise
       for (int j = 2; j <= 8; j++) { //For every led...
         int x = random(1, 10); //choose a random number between 1 and 10.
         if (x <= 5) digitalWrite(j, 0); //If that number was smaller than 5, turn that led off.
@@ -85,7 +85,7 @@ void loop() {
 
     int previous_number = 0; //0 is an impossible value to roll, so a pause cannot accidentally be triggered for no reason.
     //Run the next bit however many die are configured to roll
-    for (int i = 1; i <= NUMBER_OF_DIE; i++) {
+    for (int i = 1; i <= NUMBER_OF_DICE; i++) {
       //pick a random number then display it
       int number = random(1, 7);
       if (SERIAL_ENABLE) {
